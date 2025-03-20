@@ -1,0 +1,11 @@
+
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend  # Pointing to the 'frontend' directory
+      dockerfile: Dockerfile  # Dockerfile in the frontend folder
+    volumes:
+      - ./frontend:/app  # Mount the 'frontend' folder as a volume
+    ports:
+      - "3000:3000"  # Expose port 3000
