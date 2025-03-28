@@ -1,0 +1,77 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ff5757; /* Target-like red */
+    padding: 10px 20px;
+    color: white;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.site-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+/* For the Login button */
+.sign-in-btn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 20px; /* Oval shape */
+    transition: background-color 0.3s ease;
+}
+
+.sign-in-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Lighter highlight */
+}
+
+.login-btn-content {
+    display: flex;
+    align-items: center;
+}
+
+.login-text {
+    margin-left: 8px;
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* For the Cart button */
+.cart-btn {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 50%; /* Circular shape */
+    transition: background-color 0.3s ease;
+}
+
+.cart-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Ensure the icon size stays consistent */
+.header-right button .icon {
+    height: 30px;
+    width: auto;
+    display: block;
+}

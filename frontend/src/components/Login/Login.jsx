@@ -1,31 +1,40 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'; // React Router for redirection
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const history = useHistory(); // React Router for navigation
 
     const handleLogin = async (event) => {
         event.preventDefault();
+        setError('');
+        setLoading(true);
 
         const loginRequest = { username, password };
 
         try {
-            const response = await fetch('http://localhost:8080/login', {
+            const response = await fetch('http://localhost:4000/auth/login', { // API Gateway URL
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(loginRequest),
             });
 
-            if (response.ok) {
-                const token = await response.text();
-                localStorage.setItem('authToken', token); // Store JWT token
-                window.location.href = '/dashboard'; // Redirect to dashboard or other page
-            } else {
-                setError('Invalid credentials');
+            if (!response.ok) {
+                throw new Error('Invalid credentials');
             }
+
+            const { token } = await response.json();
+            localStorage.setItem('authToken', token);
+
+            // Redirect to dashboard
+            history.push('/dashboard');
         } catch (err) {
-            setError('Something went wrong');
+            setError(err.message || 'Something went wrong');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -47,9 +56,11 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">Login</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Logging in...' : 'Login'}
+                </button>
             </form>
-            {error && <p>{error}</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 };

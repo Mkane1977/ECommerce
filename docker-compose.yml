@@ -1,14 +1,17 @@
 
-
 services:
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    volumes:
+        - ./frontend:/app
     ports:
       - "3000:3000"
     depends_on:
       - api-gateway
+    networks:
+      - target-clone-network
 
   api-gateway:
     build:
@@ -22,6 +25,8 @@ services:
       - order-service
       - inventory-service
       - notification-service
+    networks:
+      - target-clone-network
 
   authentication-service:
     build:
@@ -29,6 +34,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5005:5005"
+    networks:
+      - target-clone-network
 
   product-service:
     build:
@@ -36,6 +43,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5001:5001"
+    networks:
+      - target-clone-network
 
   order-service:
     build:
@@ -43,6 +52,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5002:5002"
+    networks:
+      - target-clone-network
 
   inventory-service:
     build:
@@ -50,6 +61,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5003:5003"
+    networks:
+      - target-clone-network
 
   notification-service:
     build:
@@ -57,3 +70,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5004:5004"
+    networks:
+      - target-clone-network
+
+networks:
+  target-clone-network:
+    driver: bridge

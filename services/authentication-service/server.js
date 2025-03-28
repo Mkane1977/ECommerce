@@ -3,16 +3,24 @@ const cors = require('cors');
 const app = express();
 const port = 5005;
 
-app.use(cors());  // Enable CORS for all origins (or specify the frontend URL)
+app.use(cors());  // Enable CORS for all origins
+app.use(express.json()); // Middleware to parse JSON requests
 
 // Health check endpoint
 app.get('/', (req, res) => {
     res.send('Authentication Service is running');
 });
 
-// Actual API endpoint
-app.get('/products', (req, res) => {
-    res.json({ message: 'Authentication service' });
+// Add the missing /login endpoint
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    // Dummy authentication logic
+    if (username === 'testuser' && password === 'testpassword') {
+        return res.json({ token: "mock-jwt-token" });
+    } else {
+        return res.status(401).json({ error: "Invalid credentials" });
+    }
 });
 
 app.listen(port, () => {
